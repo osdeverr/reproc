@@ -1,4 +1,4 @@
-#ifdef RE_NINJA_BUILD_WINDOWS_IMPL
+#ifdef RE_REPROC_BUILD_WINDOWS_IMPL
 
 #ifndef _WIN32_WINNT
   #define _WIN32_WINNT 0x0600 // _WIN32_WINNT_VISTA
@@ -118,4 +118,4 @@ finish:
   return r;
 }
 
-#endif // RE_NINJA_BUILD_*_IMPL
+#endif // RE_REPROC_BUILD_*_IMPL
