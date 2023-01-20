@@ -1,0 +1,12 @@
+type: static-library
+name: .reproc
+
+platform.windows:
+  cxx-link-deps:
+    - ws2_32.lib
+    
+  cxx-compile-definitions-public:
+    RE_REPROC_BUILD_WINDOWS_IMPL: 1
+platform.!windows:
+  cxx-compile-definitions-public:
+    RE_REPROC_BUILD_POSIX_IMPL: 1

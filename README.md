@@ -18,6 +18,8 @@ starting, stopping and communicating with external programs. The main use case
 is executing command line applications directly from C or C++ code and
 retrieving their output.
 
+**FORK:** Moved the project to the Re build system. Rights to the code remain with its original authors.
+
 reproc consists out of two libraries: reproc and reproc++. reproc is a C99
 library that contains the actual code for working with external programs.
 reproc++ depends on reproc and adapts its API to an idiomatic C++11 API. It also
@@ -55,93 +57,14 @@ either make an issue or ask questions directly in the reproc
 
 ## Installation
 
-**Note: Building reproc requires CMake 3.12 or higher.**
+(FORK SPECIFIC) This fork only exists for usage by Re bootstrap builds. It should not be used.
 
-There are multiple ways to get reproc into your project. One way is to build
-reproc as part of your project using CMake. To do this, we first have to get the
-reproc source code into the project. This can be done using any of the following
-options:
+To use reproc in your projects, depend on the original `DaanDeMeyer/reproc` GitHub repo:
 
-- When using CMake 3.11 or later, you can use the CMake `FetchContent` API to
-  download reproc when running CMake. See
-  <https://cliutils.gitlab.io/modern-cmake/chapters/projects/fetch.html> for an
-  example.
-- Another option is to include reproc's repository as a git submodule.
-  <https://cliutils.gitlab.io/modern-cmake/chapters/projects/submodule.html>
-  provides more information.
-- A very simple solution is to just include reproc's source code in your
-  repository. You can download a zip of the source code without the git history
-  and add it to your repository in a separate directory.
-
-After including reproc's source code in your project, it can be built from the
-root CMakeLists.txt file as follows:
-
-```cmake
-add_subdirectory(<path-to-reproc>) # For example: add_subdirectory(external/reproc)
+```yaml
+deps:
+  - github:DaanDeMeyer/reproc ^14.2.4 [reproc, reprocpp]
 ```
-
-CMake options can be specified before calling `add_subdirectory`:
-
-```cmake
-set(REPROC++ ON)
-add_subdirectory(<path-to-reproc>)
-```
-
-**Note: If the option has already been cached in a previous CMake run, you'll
-have to clear CMake's cache to apply the new default value.**
-
-For more information on configuring reproc's build, see
-[CMake options](#cmake-options).
-
-You can also depend on an installed version of reproc. You can either build and
-install reproc yourself or install reproc via a package manager. reproc is
-available in the following package repositories:
-
-- Arch User Repository (<https://aur.archlinux.org/packages/reproc>)
-- vcpkg (https://github.com/microsoft/vcpkg/tree/master/ports/reproc)
-
-If using a package manager is not an option, you can build and install reproc
-from source (CMake 3.13+):
-
-```sh
-cmake -B build
-cmake --build build
-cmake --install build
-```
-
-Enable the `REPROC_TEST` option and build the `test` target to run the tests
-(CMake 3.13+):
-
-```sh
-cmake -B build -DREPROC_TEST=ON
-cmake --build build
-cmake --build build --target test
-```
-
-After installing reproc your build system will have to find it. reproc provides
-both CMake config files and pkg-config files to simplify finding a reproc
-installation using CMake and pkg-config respectively. Note that reproc and
-reproc++ are separate libraries and as a result have separate config files as
-well. Make sure to search for the one you want to use.
-
-To find an installed version of reproc using CMake:
-
-```cmake
-find_package(reproc) # Find reproc.
-find_package(reproc++) # Find reproc++.
-```
-
-After building reproc as part of your project or finding a installed version of
-reproc, you can link against it from within your CMakeLists.txt file as follows:
-
-```cmake
-target_link_libraries(myapp reproc) # Link against reproc.
-target_link_libraries(myapp reproc++) # Link against reproc++.
-```
-
-From Meson 0.53.2 onwards, reproc can be included as a CMake subproject in Meson
-build scripts. See https://mesonbuild.com/CMake-module.html for more
-information.
 
 ## Dependencies
 
